@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemanasan Global | Proyek Kelompok</title>
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --water: #3498db;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: var(--dark);
+        }
+        header {
+            background: linear-gradient(135deg, var(--dark), #1a252f);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .team-banner {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: var(--dark);
+        }
+        header h1 {
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        /* Section Penyebab */
+        .causes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .cause-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--primary);
+        }
+        
+        /* Section Simulasi */
+        .simulation-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 40px 0;
+        }
+        .sim-view {
+            width: 100%;
+            height: 300px;
+            background-color: #87CEEB; /* Langit awal */
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 1s ease;
+            display: flex;
+            align-items: flex-end;
+            border: 2px solid #bdc3c7;
+        }
+        .sun {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 50px;
+            transition: opacity 1s;
+        }
+        .sea {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20px; /* Air awal */
+            background-color: var(--water);
+            transition: height 1s ease, background-color 1s ease;
+            z-index: 2;
+        }
+        .ground-items {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            padding: 0 10px;
+            flex-wrap: wrap-reverse;
+            z-index: 1;
+            font-size: 30px;
+        }
+        .sim-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .sim-stats {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .sim-stats span {
+            color: var(--danger);
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            color: white;
+            transition: transform 0.1s;
+        }
+        .btn:active { transform: scale(0.95); }
+        .btn-factory { background-color: var(--dark); }
+        .btn-tree { background-color: var(--primary); }
+        .btn-reset { background-color: #95a5a6; }
+
+        /* Section Kuis */
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .question h4 {
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        #quizResult {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--dark);
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="team-banner">
+        👨‍🔬 Anggota Kelompok: Furqoen • Felicia • Izzah • Haris • Violetta 👩‍🔬
+    </div>
+
+    <header>
+        <h1>Pemanasan Global</h1>
+        <p>Memahami Ancaman Nyata Terhadap Masa Depan Bumi Kita</p>
+    </header>
+
+    <div class="container">
+        
+        <section id="penyebab">
+            <h2>Penyebab Utama Pemanasan Global</h2>
+            <p>Pemanasan global adalah peningkatan suhu rata-rata atmosfer, laut, dan daratan Bumi. Berikut adalah penyebab utamanya:</p>
+            <div class="causes-grid">
+                <div class="cause-card">
+                    <h3>🏭 Emisi Gas Rumah Kaca</h3>
+                    <p>Pembakaran bahan bakar fosil (batu bara, minyak, gas) untuk energi dan transportasi menghasilkan Karbon Dioksida (CO2) yang menjebak panas matahari di atmosfer.</p>
+                </div>
+                <div class="cause-card">
+                    <h3>🪓 Deforestasi (Penebangan Hutan)</h3>
+                    <p>Pohon menyerap CO2. Ketika hutan ditebang atau dibakar untuk lahan pertanian atau industri, karbon yang tersimpan di pohon dilepaskan kembali ke udara.</p>
+                </div>
+                <div class="cause-card">
+                    <h3>🐄 Industri Peternakan</h3>
+                    <p>Hewan ternak, terutama sapi, menghasilkan gas Metana (CH4) dalam proses pencernaannya. Metana adalah gas rumah kaca yang puluhan kali lebih kuat dari CO2 dalam menjebak panas.</p>
+                </div>
+                <div class="cause-card">
+                    <h3>🗑️ Limbah dan Sampah</h3>
+                    <p>Sampah organik yang membusuk di tempat pembuangan akhir (TPA) tanpa oksigen menghasilkan gas metana. Selain itu, pembakaran sampah juga melepaskan polutan beracun.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulasi">
+            <div class="simulation-container">
+                <h2>Simulasi: Keseimbangan Ekosistem (Eco-Balance)</h2>
+                <p>Uji coba dampak aktivitas manusia! Tambahkan pabrik untuk melihat peningkatan polusi dan naiknya air laut. Tanam pohon untuk menyerap karbon dan menstabilkan suhu.</p>
+                
+                <div class="sim-view" id="simView">
+                    <div class="sun" id="sun">☀️</div>
+                    <div class="ground-items" id="groundItems"></div>
+                    <div class="sea" id="sea"></div>
+                </div>
+
+                <div class="sim-controls">
+                    <button class="btn btn-factory" onclick="addFactory()">+ Tambah Pabrik 🏭</button>
+                    <div class="sim-stats">
+                        Suhu Global: <span id="tempDisplay">15.0</span> °C | 
+                        CO2: <span id="co2Display">410</span> ppm
+                    </div>
+                    <button class="btn btn-tree" onclick="addTree()">+ Tanam Pohon 🌲</button>
+                </div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <button class="btn btn-reset" onclick="resetSim()">Reset Simulasi 🔄</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="kuis">
+            <div class="quiz-container">
+                <h2>Uji Pengetahuan: 10 Soal Pemanasan Global</h2>
+                <form id="quizForm">
+                    
+                    <div class="question">
+                        <h4>1. Apa gas utama penyebab efek rumah kaca dari pembakaran bahan bakar fosil?</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q1" value="a"> A. Oksigen (O2)</label>
+                            <label><input type="radio" name="q1" value="b"> B. Karbon Dioksida (CO2)</label>
+                            <label><input type="radio" name="q1" value="c"> C. Helium (He)</label>
+                            <label><input type="radio" name="q1" value="d"> D. Argon (Ar)</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h4>2. Hewan ternak manakah yang menjadi penyumbang gas metana terbesar?</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q2" value="a"> A. Sapi</label>
+                            <label><input type="radio" name="q2" value="b"> B. Ayam</label>
+                            <label><input type="radio" name="q2" value="c"> C. Ikan</label>
+                            <label><input type="radio" name="q2" value="d"> D. Kucing</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h4>3. Apa dampak langsung dari mencairnya es di kutub utara dan selatan?</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q3" value="a"> A. Gempa bumi bertambah</label>
+                            <label><input type="radio" name="q3" value="b"> B. Permukaan air laut naik</label>
+                            <label><input type="radio" name="q3" value="c"> C. Gunung meletus</label>
+                            <label><input type="radio" name="q3" value="d"> D. Hujan meteor</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h4>4. Istilah untuk penebangan hutan secara liar dan massal adalah...</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q4" value="a"> A. Reboisasi</label>
+                            <label><input type="radio" name="q4" value="b"> B. Deforestasi</label>
+                            <label><input type="radio" name="q4" value="c"> C. Urbanisasi</label>
+                            <label><input type="radio" name="q4" value="d"> D. Irigasi</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h4>5. Mengapa pohon sangat penting dalam mencegah pemanasan global?</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q5" value="a"> A. Pohon menghasilkan karbon dioksida</label>
+                            <label><input type="radio" name="q5" value="b"> B. Pohon menyerap panas matahari secara langsung</label>
+                            <label><input type="radio" name="q5" value="c"> C. Pohon menyerap CO2 dan menghasilkan Oksigen</label>
+                            <label><input type="radio" name="q5" value="d"> D. Pohon mencegah angin topan</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h4>6. Mana dari berikut ini yang BUKAN merupakan energi terbarukan?</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q6" value="a"> A. Tenaga Surya</label>
+                            <label><input type="radio" name="q6" value="b"> B. Tenaga Angin</label>
+                            <label><input type="radio" name="q6" value="c"> C. Panas Bumi</label>
+                            <label><input type="radio" name="q6" value="d"> D. Batu Bara</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h4>7. Efek rumah kaca sejatinya dibutuhkan oleh Bumi. Apa yang terjadi jika Bumi tidak memiliki efek rumah kaca sama sekali?</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q7" value="a"> A. Bumi akan terbakar</label>
+                            <label><input type="radio" name="q7" value="b"> B. Bumi akan sangat dingin dan membeku</label>
+                            <label><input type="radio" name="q7" value="c"> C. Bumi akan kehabisan oksigen</label>
+                            <label><input type="radio" name="q7" value="d"> D. Tidak ada perubahan</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h4>8. Apa nama perjanjian internasional tahun 2015 yang bertujuan menahan laju kenaikan suhu global?</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q8" value="a"> A. Perjanjian Paris (Paris Agreement)</label>
+                            <label><input type="radio" name="q8" value="b"> B. Protokol Kyoto</label>
+                            <label><input type="radio" name="q8" value="c"> C. Deklarasi Djuanda</label>
+                            <label><input type="radio" name="q8" value="d"> D. Perjanjian Jenewa</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h4>9. Gas CFC (Chlorofluorocarbon) yang dapat merusak lapisan ozon dulunya banyak ditemukan pada...</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q9" value="a"> A. Baterai mobil</label>
+                            <label><input type="radio" name="q9" value="b"> B. Kulkas dan AC (Pendingin ruangan)</label>
+                            <label><input type="radio" name="q9" value="c"> C. Kompor gas</label>
+                            <label><input type="radio" name="q9" value="d"> D. Televisi</label>
+                        </div>
+                    </div>
+
+                    <div class="question">
+                        <h4>10. Tindakan sederhana apa yang bisa kita lakukan sehari-hari untuk mengurangi pemanasan global?</h4>
+                        <div class="options">
+                            <label><input type="radio" name="q10" value="a"> A. Menggunakan AC pada suhu paling rendah 24 jam</label>
+                            <label><input type="radio" name="q10" value="b"> B. Membakar sampah di halaman rumah</label>
+                            <label><input type="radio" name="q10" value="c"> C. Menggunakan transportasi umum dan mengurangi plastik</label>
+                            <label><input type="radio" name="q10" value="d"> D. Membuang limbah elektronik ke sungai</label>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="calculateScore()" style="background-color: var(--primary); width: 100%; margin-top: 10px; font-size: 1.2rem;">Cek Nilai Saya!</button>
+                    
+                    <div id="quizResult"></div>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Dibuat untuk Tugas Proyek | © 2026 Tim Furqoen, Felicia, Izzah, Haris, Violetta.</p>
+    </footer>
+
+    <script>
+        // Logika Simulasi
+        let baseTemp = 15.0;
+        let baseCo2 = 410;
+        let currentTemp = baseTemp;
+        let currentCo2 = baseCo2;
+        let seaLevel = 20; // dalam pixel
+
+        const tempDisplay = document.getElementById('tempDisplay');
+        const co2Display = document.getElementById('co2Display');
+        const simView = document.getElementById('simView');
+        const sea = document.getElementById('sea');
+        const sun = document.getElementById('sun');
+        const groundItems = document.getElementById('groundItems');
+
+        function updateEnvironment() {
+            // Update Text
+            tempDisplay.innerText = currentTemp.toFixed(1);
+            co2Display.innerText = Math.round(currentCo2);
+            
+            // Update Sea Level
+            seaLevel = 20 + ((currentTemp - baseTemp) * 20); // naik 20px setiap 1 derajat
+            if(seaLevel > 300) seaLevel = 300; // max height
+            sea.style.height = seaLevel + 'px';
+
+            // Update Sky Color (Pollution effect)
+            let pollutionRatio = (currentCo2 - baseCo2) / 200; // max pollution at ~600 co2
+            if(pollutionRatio < 0) pollutionRatio = 0;
+            if(pollutionRatio > 1) pollutionRatio = 1;
+            
+            // From Blue (#87CEEB) to Gray (#7f8c8d)
+            let r = Math.round(135 - (pollutionRatio * (135 - 127)));
+            let g = Math.round(206 - (pollutionRatio * (206 - 140)));
+            let b = Math.round(235 - (pollutionRatio * (235 - 141)));
+            simView.style.backgroundColor = `rgb(${r},${g},${b})`;
+
+            // Hide sun if too polluted
+            sun.style.opacity = 1 - (pollutionRatio * 1.5);
+
+            // Water becomes murky
+            let waterG = Math.round(152 - (pollutionRatio * 100));
+            let waterB = Math.round(219 - (pollutionRatio * 150));
+            sea.style.backgroundColor = `rgb(52, ${waterG}, ${waterB})`;
+        }
+
+        function addFactory() {
+            if(groundItems.childElementCount > 35) {
+                alert("Lahan sudah penuh!");
+                return;
+            }
+            currentTemp += 0.3;
+            currentCo2 += 15;
+            
+            const factory = document.createElement('span');
+            factory.innerText = '🏭';
+            groundItems.appendChild(factory);
+            updateEnvironment();
+        }
+
+        function addTree() {
+            if(groundItems.childElementCount > 35) {
+                alert("Lahan sudah penuh!");
+                return;
+            }
+            currentTemp -= 0.1;
+            if(currentTemp < 14.0) currentTemp = 14.0; // Batas minimal suhu
+            
+            currentCo2 -= 5;
+            if(currentCo2 < 350) currentCo2 = 350; // Batas minimal co2
+
+            const tree = document.createElement('span');
+            tree.innerText = '🌲';
+            groundItems.appendChild(tree);
+            updateEnvironment();
+        }
+
+        function resetSim() {
+            currentTemp = baseTemp;
+            currentCo2 = baseCo2;
+            groundItems.innerHTML = '';
+            updateEnvironment();
+        }
+
+        // Logika Kuis
+        const correctAnswers = {
+            q1: 'b', q2: 'a', q3: 'b', q4: 'b', q5: 'c',
+            q6: 'd', q7: 'b', q8: 'a', q9: 'b', q10: 'c'
+        };
+
+        function calculateScore() {
+            let score = 0;
+            let answered = 0;
+
+            for (let i = 1; i <= 10; i++) {
+                const radios = document.getElementsByName('q' + i);
+                for (let j = 0; j < radios.length; j++) {
+                    if (radios[j].checked) {
+                        answered++;
+                        if (radios[j].value === correctAnswers['q' + i]) {
+                            score += 10;
+                        }
+                    }
+                }
+            }
+
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.style.display = 'block';
+
+            if (answered < 10) {
+                resultDiv.innerHTML = `⚠️ Anda baru menjawab ${answered} dari 10 soal. Silakan lengkapi terlebih dahulu!`;
+                resultDiv.style.backgroundColor = '#f1c40f';
+                resultDiv.style.color = '#333';
+            } else {
+                let message = "";
+                if (score >= 80) message = "Luar Biasa! Anda adalah Pahlawan Bumi! 🌍💚";
+                else if (score >= 50) message = "Kerja Bagus! Tingkatkan terus kepedulianmu! 🌱";
+                else message = "Ayo belajar lagi demi menyelamatkan Bumi kita! 📖";
+
+                resultDiv.innerHTML = `Skor Anda: <strong>${score}/100</strong><br>${message}`;
+                resultDiv.style.backgroundColor = score >= 80 ? '#d4edda' : (score >= 50 ? '#fff3cd' : '#f8d7da');
+                resultDiv.style.color = score >= 80 ? '#155724' : (score >= 50 ? '#856404' : '#721c24');
+            }
+        }
+    </script>
+</body>
+</html>
